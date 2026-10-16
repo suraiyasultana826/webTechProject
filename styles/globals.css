@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { --radius: 0.9rem; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    background: #f6f7f3;
+    color: #1c261f;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid #ee8a0d; outline-offset: 2px; }
+}
+
+@layer utilities {
+  .bg-custom-color { background-color: #26663f; }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2f7d4f; border-radius: 8px; }

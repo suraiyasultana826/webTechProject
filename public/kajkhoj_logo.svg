@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" height="40">
+  <rect x="2" y="6" width="44" height="44" rx="12" fill="#2f7d4f"/>
+  <path d="M24 42V24m0 0c0-7 5-11 12-11 0 7-5 11-12 11Zm0 5c0-6-4-9-10-9 0 6 4 9 10 9Z" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="38" cy="38" r="5" fill="#ee8a0d"/>
+  <text x="56" y="38" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="26" font-weight="800" fill="#1c261f">Kaj<tspan fill="#2f7d4f">Khoj</tspan></text>
+</svg>
