@@ -4,12 +4,10 @@ import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import JobsCard from "./JobsCard";
 import { motion } from "framer-motion";
-import { FiTwitter } from "react-icons/fi";
-import { GrLinkedin } from "react-icons/gr";
-import { BsFacebook } from "react-icons/bs";
 import styles from "../styles/Homepage.module.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Footer from "./Footer";
 
 export default function Intro() {
   const [search, setSearch] = useState("");
@@ -35,9 +33,23 @@ export default function Intro() {
       return;
     }
 
+    const q = search?.toLowerCase().trim();
+    if (!q) {
+      setFilteredJobs(jobData || []);
+      setDoneSearch(true);
+      setTimeout(scrollToResults, 100);
+      return;
+    }
+
     const filteredJobs = jobData?.filter((job) => {
-      let x = job?.job_category;
-      return x?.toUpperCase() === search?.toUpperCase().trim();
+      return (
+        job?.title?.toLowerCase().includes(q) ||
+        job?.company?.toLowerCase().includes(q) ||
+        job?.job_category?.toLowerCase().includes(q) ||
+        job?.job_type?.toLowerCase().includes(q) ||
+        job?.job_duration?.toLowerCase().includes(q) ||
+        job?.description?.toLowerCase().includes(q)
+      );
     });
     setFilteredJobs(filteredJobs);
     setDoneSearch(true);
@@ -54,9 +66,15 @@ export default function Intro() {
     }
 
     setSearch(tag);
+    const q = tag.toLowerCase().trim();
     const filteredJobs = jobData?.filter((job) => {
-      let x = job?.job_category;
-      return x?.toUpperCase() === tag.toUpperCase();
+      return (
+        job?.title?.toLowerCase().includes(q) ||
+        job?.company?.toLowerCase().includes(q) ||
+        job?.job_category?.toLowerCase().includes(q) ||
+        job?.job_type?.toLowerCase().includes(q) ||
+        job?.job_duration?.toLowerCase().includes(q)
+      );
     });
     setFilteredJobs(filteredJobs);
     setDoneSearch(true);
@@ -145,7 +163,7 @@ export default function Intro() {
               className={styles.tagsContainer}
             >
               <span className={styles.tagsTitle}>Popular Tags:</span>
-              {["Electrician", "Labourer", "Driver", "Plumber"].map((tag) => (
+              {["Week-based", "Farmhand", "Electrician", "Labourer", "Plumber", "Driver"].map((tag) => (
                 <motion.span
                   key={tag}
                   whileHover={{ scale: 1.1 }}
@@ -167,8 +185,10 @@ export default function Intro() {
             transition={{ duration: 0.8 }}
           >
             <img
-              src="/hero-image-2.png"
+              src="/hero-image-2.webp"
               alt="Hero Image"
+              width={1000}
+              height={666}
               className={styles.heroImage}
             />
           </motion.div>
@@ -234,67 +254,7 @@ export default function Intro() {
           </div>
         </motion.div>
       )}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerSection}>
-            <h3>KajKhoj</h3>
-            <img
-              src="/kajkhoj_logo.svg"
-              alt="KajKhoj Logo"
-              className={styles.logo}
-            />
-          </div>
-
-          <div className={styles.footerSection}>
-            <h3>Quick Links</h3>
-            <ul className={styles.quickLinks}>
-              <li>
-                <a href="#about">About Us</a>
-              </li>
-              <li>
-                <a href="#services">Services</a>
-              </li>
-              <li>
-                <a href="#contact">Contact</a>
-              </li>
-              <li>
-                <a href="#faq">FAQ</a>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.footerSection}>
-            <h3>Connect with Us</h3>
-            <div className={styles.socialLinks}>
-              <a
-                href="https://x.com/devmangrani"
-                target="_blank"
-                className={styles.iconLink}
-              >
-                <FiTwitter size={22} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/dev-mangrani/"
-                target="_blank"
-                className={styles.iconLink}
-              >
-                <GrLinkedin size={22} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                className={styles.iconLink}
-              >
-                <BsFacebook size={22} />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.bottomFooter}>
-          <p>&copy; {new Date().getFullYear()} KajKhoj. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

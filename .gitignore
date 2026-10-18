@@ -30,3 +30,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# uploaded CVs (private, served only via /api/job/getCV) and local MongoDB data
+/uploads
+/.db-data
+
+# sample employer logins created by npm run seed
+/sample-accounts.local.json

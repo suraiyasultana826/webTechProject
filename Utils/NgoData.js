@@ -1,76 +1,169 @@
 
 const SeedData = [
   {
-    name: "Ministry of Labour and Employment",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684039827/Janseva/labour_rh0mh7.jpg",
+    name: "Ministry of Labour and Employment (MoLE)",
+    image: "https://www.google.com/s2/favicons?domain=mole.gov.bd&sz=128",
     description:
-      "The Ministry of Labour and Employment is responsible for formulating and implementing policies and programs related to employment, job creation, and workers' welfare in India. It oversees several agencies that provide employment services and support.",
+      "The Ministry of Labour and Employment formulates labour policy and protects workers' rights in Bangladesh. Through the Department of Labour and the Department of Inspection for Factories and Establishments (DIFE), it oversees workplace safety, wages, and welfare services for workers in both formal and informal sectors.",
     category: "Government",
-    link: "https://labour.gov.in/",
+    location: "Dhaka, Bangladesh",
+    link: "https://mole.gov.bd/",
   },
   {
-    name: "National Career Service (NCS)",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684039857/Janseva/l7OUmrFU_QD8taT_ICxg-mlMmf-IjXt5UqJ4pjrHxFkB9IWFN6rbtcgE7W7Ds0Zctg_x9goc9.png",
+    name: "Bureau of Manpower, Employment and Training (BMET)",
+    image: "https://www.google.com/s2/favicons?domain=bmet.gov.bd&sz=128",
     description:
-      " NCS is an online platform developed by the Ministry of Labour and Employment to provide job-related services. It offers job listings, career counseling, skill assessments, and information about government schemes and programs.",
+      "BMET works under the Ministry of Expatriates' Welfare and Overseas Employment. Along with managing overseas employment, it runs Technical Training Centres (TTCs) across the country that offer short courses in trades such as electrical work, plumbing, welding, and driving.",
     category: "Government",
-    link: "https://www.ncs.gov.in/Pages/default.aspx",
+    location: "Dhaka, Bangladesh",
+    link: "https://bmet.gov.bd/",
   },
   {
-    name: "National Rural Employment Guarantee Act (NREGA)",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684039908/Janseva/mgnartega_r71lmj.jpg",
+    name: "Department of Youth Development (DYD)",
+    image: "https://www.google.com/s2/favicons?domain=dyd.gov.bd&sz=128",
     description:
-      "NREGA aims to provide employment opportunities and ensure livelihood security for rural workers. It guarantees a certain number of days of wage employment to eligible households in rural areas.",
+      "The Department of Youth Development, under the Ministry of Youth and Sports, offers training in areas such as agriculture, livestock, fisheries, and computer skills, and provides youth loans to help trainees start their own small businesses.",
     category: "Government",
-    link: "https://nrega.nic.in/netnrega/mgnrega_new/NREGA_home.aspx",
+    location: "Dhaka, Bangladesh",
+    link: "https://dyd.gov.bd/",
   },
   {
-    name: "National Skill Development Corporation (NSDC)",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684040013/Janseva/NSDC_Logo_in_clear_background_zhciqh.png",
+    name: "Department of Agricultural Extension (DAE)",
+    image: "https://www.google.com/s2/favicons?domain=dae.gov.bd&sz=128",
     description:
-      "NSDC is a public-private partnership organization that promotes skill development and vocational training in India. It collaborates with various training providers and industries to enhance the employability of workers.",
+      "The Department of Agricultural Extension, under the Ministry of Agriculture, supports farmers and agricultural workers with training, modern farming technology, and advisory services through its field offices at district and upazila level.",
     category: "Government",
-    link: "https://nsdcindia.org/",
+    location: "Dhaka, Bangladesh",
+    link: "https://dae.gov.bd/",
   },
   {
-    name: "Self-Employed Women's Association (SEWA)",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684300560/Janseva/e7d3600d-bf6e-4fbb-971b-75f44cb19525_r4adcq.jpg",
+    name: "National Skills Development Authority (NSDA)",
+    image: "https://www.google.com/s2/favicons?domain=nsda.gov.bd&sz=128",
     description:
-      "SEWA is a prominent NGO in India that focuses on the empowerment of women working in the informal sector. It provides support to small-scale workers, including laborers, electricians, plumbers, and more. SEWA offers various services such as skill training, financial assistance, access to social security, healthcare, and advocacy for workers' rights. Their aim is to enhance the livelihoods and social status of these workers.",
-    category: "NGO",
-    link: "https://www.sewa.org/",
+      "The National Skills Development Authority coordinates skills development in Bangladesh. It sets competency standards for trades and maintains the Bangladesh National Qualifications Framework (BNQF), which helps workers get their skills formally recognised.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://nsda.gov.bd/",
   },
   {
-    name: "Prayas",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684300629/Janseva/5qho1rXK_400x400_nhtxtb.jpg",
+    name: "BRAC",
+    image: "https://www.google.com/s2/favicons?domain=www.brac.net&sz=128",
     description:
-      "Prayas is an NGO operating in multiple states across India and works extensively to improve the lives of marginalized communities, including small workers and laborers. They provide vocational training, legal assistance, healthcare services, and educational support to empower workers. Prayas also advocates for labor rights and works towards policy changes for the welfare of these workers. ",
+      "BRAC, founded in Bangladesh in 1972, is one of the world's largest development organisations. Its Skills Development Programme trains young people through apprenticeships with local businesses, and its microfinance and Ultra-Poor Graduation programmes help families build steady sources of income.",
     category: "NGO",
-    link: "http://www.prayaschildren.org/",
+    location: "Dhaka, Bangladesh",
+    link: "https://www.brac.net/",
   },
   {
-    name: "Association for Rural and Urban Needy (ARUN)",
-    image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684300687/Janseva/El8q1-dVgAABLj5_ayt0ga.png",
+    name: "Palli Karma-Sahayak Foundation (PKSF)",
+    image: "https://www.google.com/s2/favicons?domain=pksf.org.bd&sz=128",
     description:
-      "ARUN is an NGO that focuses on socio-economic development and upliftment of disadvantaged communities in rural and urban areas. They support small workers, laborers, electricians, and plumbers by offering skill development programs, microfinance opportunities, and access to essential services. ARUN also helps in creating sustainable livelihoods for these workers through entrepreneurship development and capacity building",
-    category: "NGO",
-    link: "http://arunindia.org/",
+      "Palli Karma-Sahayak Foundation was established by the Government of Bangladesh in 1990. It funds partner organisations across the country to run microfinance, rural employment, and skills programmes that help low-income households earn a stable living.",
+    category: "Foundation",
+    location: "Dhaka, Bangladesh",
+    link: "https://pksf.org.bd/",
   },
   {
-    name: "Smile Foundation",
+    name: "Dhaka Ahsania Mission",
     image:
-      "https://res.cloudinary.com/dw2dqblhs/image/upload/v1684300755/Janseva/sm-e_TTy_400x400_vegcdn.jpg",
+      "https://api.dicebear.com/7.x/initials/svg?seed=DAM&backgroundColor=2f7d4f",
     description:
-      "Smile Foundation is a national-level development organization in India that works towards the education, healthcare, and livelihood support of underprivileged communities. They have initiatives specifically targeting small workers and laborers. The organization provides skill training programs, healthcare services, education support, and livelihood enhancement opportunities. Smile Foundation also collaborates with various stakeholders to improve policy frameworks and ensure better working conditions for these workers. ",
+      "Dhaka Ahsania Mission is a non-profit development organisation founded in 1958. It runs education, technical and vocational training, health, and livelihood programmes for disadvantaged communities in Bangladesh.",
     category: "NGO",
-    link: "https://www.smilefoundationindia.org/",
+    location: "Dhaka, Bangladesh",
+    link: "https://www.ahsaniamission.org.bd/",
+  },
+  {
+    name: "Bangladesh Technical Education Board (BTEB)",
+    image: "https://www.google.com/s2/favicons?domain=bteb.gov.bd&sz=128",
+    description:
+      "The Bangladesh Technical Education Board oversees technical and vocational education across the country. It sets curricula, holds examinations and awards certificates for diploma, vocational SSC/HSC and short-course trade programmes run by public and private institutes.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://bteb.gov.bd/",
+  },
+  {
+    name: "Bangladesh Small and Cottage Industries Corporation (BSCIC)",
+    image: "https://www.google.com/s2/favicons?domain=bscic.gov.bd&sz=128",
+    description:
+      "BSCIC supports small, micro and cottage industries in Bangladesh. It runs industrial estates across the country and offers entrepreneurs training, advisory services and help with access to credit.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://bscic.gov.bd/",
+  },
+  {
+    name: "Department of Women Affairs (DWA)",
+    image: "https://www.google.com/s2/favicons?domain=dwa.gov.bd&sz=128",
+    description:
+      "The Department of Women Affairs, under the Ministry of Women and Children Affairs, runs skills and income-generating training for women in trades such as tailoring, handicrafts and computing, along with programmes that support women's employment.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://dwa.gov.bd/",
+  },
+  {
+    name: "Department of Livestock Services (DLS)",
+    image: "https://www.google.com/s2/favicons?domain=dls.gov.bd&sz=128",
+    description:
+      "The Department of Livestock Services, under the Ministry of Fisheries and Livestock, supports livestock and poultry farmers with veterinary services, training and technical advice through its upazila livestock offices.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://dls.gov.bd/",
+  },
+  {
+    name: "Bangladesh Overseas Employment and Services Limited (BOESL)",
+    image: "https://www.google.com/s2/favicons?domain=boesl.gov.bd&sz=128",
+    description:
+      "BOESL is a government-owned recruiting agency under the Ministry of Expatriates' Welfare and Overseas Employment. It recruits Bangladeshi workers for jobs abroad at low cost through government-to-government and employer agreements.",
+    category: "Government",
+    location: "Dhaka, Bangladesh",
+    link: "https://boesl.gov.bd/",
+  },
+  {
+    name: "International Labour Organization (ILO) – Bangladesh",
+    image: "https://www.google.com/s2/favicons?domain=www.ilo.org&sz=128",
+    description:
+      "The ILO is the United Nations agency for the world of work. Its Bangladesh office works with the government, employers and workers' organisations on decent work, occupational safety and health, skills development and labour rights, including programmes in the ready-made garment sector.",
+    category: "International",
+    location: "Dhaka, Bangladesh",
+    link: "https://www.ilo.org/regions-and-countries/asia-and-pacific/bangladesh",
+  },
+  {
+    name: "UCEP Bangladesh",
+    image: "https://www.google.com/s2/favicons?domain=ucepbd.org&sz=128",
+    description:
+      "UCEP Bangladesh has worked since 1972 to give children and young people from low-income families general education and technical and vocational training. Its technical schools teach trades such as electrical work, welding and automobile repair, and it helps graduates find jobs.",
+    category: "NGO",
+    location: "Dhaka, Bangladesh",
+    link: "https://ucepbd.org/",
+  },
+  {
+    name: "ASA",
+    image:
+      "https://api.dicebear.com/7.x/initials/svg?seed=ASA&backgroundColor=c0392b",
+    description:
+      "ASA is a Bangladeshi non-governmental organisation, founded in 1978, that provides microfinance to low-income people. Its small loans and savings services help farmers, small traders and day labourers start or grow small businesses.",
+    category: "NGO",
+    location: "Dhaka, Bangladesh",
+    link: "https://asa.org.bd/",
+  },
+  {
+    name: "Bangladesh Garment Manufacturers and Exporters Association (BGMEA)",
+    image:
+      "https://api.dicebear.com/7.x/initials/svg?seed=BGMEA&backgroundColor=1f4e8c",
+    description:
+      "BGMEA represents the country's ready-made garment manufacturers and exporters. It works on workplace safety, workers' welfare and skills training for the garment industry, which employs millions of workers in Bangladesh.",
+    category: "Trade Association",
+    location: "Dhaka, Bangladesh",
+    link: "https://www.bgmea.com.bd/",
+  },
+  {
+    name: "Bangladesh Employers' Federation (BEF)",
+    image: "https://www.google.com/s2/favicons?domain=bef.org.bd&sz=128",
+    description:
+      "The Bangladesh Employers' Federation represents employers on labour and industrial relations issues. It takes part in national tripartite discussions with the government and workers on wages and labour law, and runs training on workplace compliance and occupational safety.",
+    category: "Employers' Association",
+    location: "Dhaka, Bangladesh",
+    link: "https://bef.org.bd/",
   },
 ];
 

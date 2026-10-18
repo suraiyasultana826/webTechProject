@@ -23,27 +23,33 @@ export default function AppliedJobDataTable() {
   const columns = [
     {
       name: "Apply Date",
-      selector: (row) =>
-        new Date(`${row?.job?.createdAt}`).toLocaleDateString("en-GB"),
+      minWidth: "110px",
+      selector: (row) => new Date(`${row?.createdAt}`).toLocaleDateString("en-GB"),
     },
     {
       name: "Employer Name",
+      minWidth: "170px",
       selector: (row) => row?.job?.company,
+      wrap: true,
     },
     {
       name: "Job title",
+      minWidth: "200px",
       selector: (row) => row?.job?.title,
+      wrap: true,
     },
     {
       name: "Job Salary ",
-      selector: (row) => "₹" + row?.job?.salary,
+      minWidth: "110px",
+      selector: (row) => "৳" + row?.job?.salary,
     },
     {
       name: "Status",
+      minWidth: "110px",
       selector: (row) => (
         <p
           className={`uppercase font-semibold ${
-            row?.status === "approved" ? "text-green-500" : ""
+            row?.status === "accepted" ? "text-green-500" : ""
           }  ${row?.status === "rejected" ? "text-red-600" : ""}`}
         >
           {row?.status}
@@ -52,6 +58,7 @@ export default function AppliedJobDataTable() {
     },
     {
       name: "Action",
+      minWidth: "130px",
       cell: (row) => (
         <button
           onClick={() => router.push(`/frontend/jobDetails/${row?.job?._id}`)}
@@ -69,7 +76,7 @@ export default function AppliedJobDataTable() {
     } else {
       setFilteredData(
         Data?.filter((item) => {
-          const itemData = item?.job?.company.toUpperCase();
+          const itemData = (item?.job?.company || "").toUpperCase();
           const textData = search.toUpperCase();
           return itemData.indexOf(textData) > -1;
         })
@@ -83,7 +90,7 @@ export default function AppliedJobDataTable() {
         subHeaderAlign={"right"}
         columns={columns}
         data={filteredData}
-        keyField="id"
+        keyField="_id"
         pagination
         title={`Total Applied Jobs: ${Data?.length}`}
         fixedHeader

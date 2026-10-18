@@ -25,24 +25,30 @@ export default function SavedJobDataTable() {
 
   const columns = [
     {
-      name: "Apply Date",
-      selector: (row) =>
-        new Date(`${row?.job?.createdAt}`).toLocaleDateString("en-GB"),
+      name: "Saved Date",
+      minWidth: "110px",
+      selector: (row) => new Date(`${row?.createdAt}`).toLocaleDateString("en-GB"),
     },
     {
       name: "Employer Name",
+      minWidth: "170px",
       selector: (row) => row?.job?.company,
+      wrap: true,
     },
     {
       name: "Job title",
+      minWidth: "200px",
       selector: (row) => row?.job?.title,
+      wrap: true,
     },
     {
       name: "Job Salary ",
-      selector: (row) => "₹" + row?.job?.salary,
+      minWidth: "110px",
+      selector: (row) => "৳" + row?.job?.salary,
     },
     {
       name: "Action",
+      minWidth: "90px",
       cell: (row) => (
         <button
           onClick={() => handleDelete(row?._id)}
@@ -54,6 +60,7 @@ export default function SavedJobDataTable() {
     },
     {
       name: "",
+      minWidth: "130px",
       cell: (row) => (
         <button
           onClick={() => router.push(`/frontend/jobDetails/${row?.job?._id}`)}
@@ -71,7 +78,7 @@ export default function SavedJobDataTable() {
     } else {
       setFilteredData(
         Data?.filter((item) => {
-          const itemData = item?.job?.company.toUpperCase();
+          const itemData = (item?.job?.company || "").toUpperCase();
           const textData = search.toUpperCase();
           return itemData.indexOf(textData) > -1;
         })
@@ -81,10 +88,12 @@ export default function SavedJobDataTable() {
 
   const handleDelete = async (id) => {
     const res = await delete_book_mark_job(id);
-    if (res.success) {
-      return setFilteredData(filteredData.filter((item) => item?._id !== id));
+    if (res?.success) {
+      toast.success(res.message || "Job removed from saved bookmarks");
+      setData((prev) => prev.filter((item) => item?._id !== id));
+      setFilteredData((prev) => prev.filter((item) => item?._id !== id));
     } else {
-      return toast.error(res.message);
+      toast.error(res?.message || "Failed to remove saved job");
     }
   };
 
@@ -94,7 +103,7 @@ export default function SavedJobDataTable() {
         subHeaderAlign={"right"}
         columns={columns}
         data={filteredData}
-        keyField="id"
+        keyField="_id"
         pagination
         title={`Total Saved Jobs: ${Data?.length}`}
         fixedHeader

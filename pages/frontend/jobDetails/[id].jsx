@@ -11,59 +11,71 @@ import { HiOutlineStar } from "react-icons/hi";
 import { FaUserAstronaut } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { setMatchingJobData } from "@/Utils/JobSlice";
-import { get_specified_job } from "@/Services/job";
+import { get_job, get_specified_job } from "@/Services/job";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InfinitySpin } from "react-loader-spinner";
 import useSWR from "swr";
-import { book_mark_job } from "@/Services/job/bookmark";
+import { book_mark_job, delete_book_mark_job, check_job_bookmarked } from "@/Services/job/bookmark";
+import { BsBookmark, BsBookmarkCheckFill } from "react-icons/bs";
 
 export default function JobDetails() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
-  const JobData = useSelector((state) => state?.Job?.JobData);
-  const machingData = useSelector((state) => state?.Job?.matchingData);
   const user = useSelector((state) => state?.User?.userData);
   const [JobDetails, setJobDetails] = useState(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const { data, error, isLoading } = useSWR(`/get-specified-job`, () =>
+  const { data, error, isLoading } = useSWR(id ? `/get-specified-job-${id}` : null, () =>
     get_specified_job(id)
   );
 
   useEffect(() => {
-    if (data) setJobDetails(data?.data);
+    if (data?.data) {
+      setJobDetails(data.data);
+    }
   }, [data]);
 
-  if (error) toast.error(error);
+  const category = JobDetails?.job_category;
+  const { data: relatedData } = useSWR(category ? `/related-jobs-${category}` : null, () =>
+    get_job({ category })
+  );
+  const relatedJobs = (relatedData?.data || []).filter((item) => item?._id !== id);
 
   useEffect(() => {
-    if (JobDetails) {
-      const filteredJobData = JobData?.filter(
-        (job) => job.job_category === JobDetails?.job_category
-      );
-      const filteredJobData2 = filteredJobData?.filter(
-        (job) => job._id !== JobDetails?._id
-      );
-      dispatch(setMatchingJobData(filteredJobData2));
+    if (user?._id && id) {
+      check_job_bookmarked(user._id, id).then((res) => {
+        if (res?.bookmarked) setIsBookmarked(true);
+      });
     }
-  }, [JobDetails, JobData, dispatch]);
+  }, [user, id]);
 
   const handleApply = () => {
     if (!user) return toast.error("Please Login First");
     router.push(`/frontend/applyJob/${id}`);
   };
 
-  const handleBookMark = async () => {
+  const handleBookMarkToggle = async () => {
     if (!user) return toast.error("Please Login First");
 
-    const data = { user: user?._id, job: JobDetails?._id };
-    const res = await book_mark_job(data);
-    if (res.success) {
-      return toast.success(res.message);
+    if (isBookmarked) {
+      const res = await delete_book_mark_job({ user: user._id, job: JobDetails?._id });
+      if (res?.success) {
+        setIsBookmarked(false);
+        toast.info("Removed from saved bookmarks");
+      } else {
+        toast.error(res?.message || "Failed to remove bookmark");
+      }
     } else {
-      return toast.error(res.message);
+      const data = { user: user?._id, job: JobDetails?._id };
+      const res = await book_mark_job(data);
+      if (res?.success) {
+        setIsBookmarked(true);
+        toast.success(res.message);
+      } else {
+        toast.error(res?.message || "Failed to bookmark job");
+      }
     }
   };
 
@@ -107,17 +119,17 @@ export default function JobDetails() {
                 <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
                   <div className="flex items-center justify-center mb-1">
                     <FaUserAstronaut className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1  w-20">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
                       Job Poster{" "}
                     </p>
-                    <p className=" text-sm text-gray-800 mx-1">
+                    <p className=" text-sm text-gray-800 mx-1 min-w-0 [overflow-wrap:anywhere]">
                       {JobDetails?.user?.name}
                     </p>
                   </div>
                   <div className="flex items-center justify-center mb-1">
                     <MdEmail className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1  w-20">Email </p>
-                    <p className=" text-sm text-gray-800 mx-1">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">Email </p>
+                    <p className=" text-sm text-gray-800 mx-1 min-w-0 [overflow-wrap:anywhere]">
                       {JobDetails?.user?.email}
                     </p>
                   </div>
@@ -125,14 +137,14 @@ export default function JobDetails() {
                 <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
                   <div className="flex items-center justify-center mb-1">
                     <GoLocation className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1  w-20">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
                       Location{" "}
                     </p>
-                    <p className=" text-sm text-gray-800 mx-1">Bhopal</p>
+                    <p className=" text-sm text-gray-800 mx-1">Bangladesh</p>
                   </div>
                   <div className="flex items-center justify-center mb-1">
                     <MdCategory className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1  w-20">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
                       Category{" "}
                     </p>
                     <p className=" text-sm text-gray-800 mx-1 ">
@@ -143,7 +155,7 @@ export default function JobDetails() {
                 <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
                   <div className="flex items-center justify-center mb-1">
                     <BsBriefcaseFill className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-20">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
                       Job Type{" "}
                     </p>
                     <p className="text-sm text-gray-800 mx-1 capitalize">
@@ -152,28 +164,35 @@ export default function JobDetails() {
                   </div>
                   <div className="flex items-center justify-center mb-1">
                     <AiOutlineDollarCircle className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1  w-20">
+                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
                       Salary{" "}
                     </p>
-                    <p className=" text-sm text-gray-800 mx-1">
-                      ₹ {JobDetails?.salary}{" "}
+                    <p className="text-sm text-gray-800 mx-1">
+                      ৳ {JobDetails?.salary} {JobDetails?.salary_period ? `(${JobDetails.salary_period})` : ""}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
                   {JobDetails?.user?.email === user?.email ? (
                     <p className="text-xs text-red-500">
-                      unable Apply to your Own jobs
+                      Unable to apply to your own job posting
                     </p>
                   ) : (
-                    <div className="flex items-center justify-center  ">
-                      <BsFillBookmarkCheckFill
-                        onClick={handleBookMark}
-                        className="text-sky-700 text-4xl cursor-pointer  mx-2"
-                      />
+                    <div className="flex items-center justify-center">
+                      <button
+                        onClick={handleBookMarkToggle}
+                        title={isBookmarked ? "Remove Bookmark" : "Save Job to Bookmarks"}
+                        className="p-2 text-2xl mx-2 rounded-full border border-sky-700 text-sky-700 hover:bg-sky-50 transition-all"
+                      >
+                        {isBookmarked ? (
+                          <BsBookmarkCheckFill className="text-indigo-600" />
+                        ) : (
+                          <BsBookmark className="text-gray-600" />
+                        )}
+                      </button>
                       <button
                         onClick={handleApply}
-                        className="md:px-6 md:py-3 px-3 py-2 mt-2 md:mt-0 bg-indigo-500 rounded text-base tracking-widest uppercase transition-all duration-700 hover:bg-indigo-900 text-white  "
+                        className="md:px-6 md:py-3 px-3 py-2 mt-2 md:mt-0 bg-indigo-500 rounded text-base tracking-widest uppercase transition-all duration-700 hover:bg-indigo-900 text-white font-medium"
                       >
                         Apply Position
                       </button>
@@ -198,6 +217,13 @@ export default function JobDetails() {
                   </p>
                   <p className=" text-sm text-gray-800 mx-1">
                     {JobDetails?.job_vacancy}
+                  </p>
+                </div>
+                <div className="flex items-center justify-start mb-3">
+                  <BsBriefcaseFill className="text-base font-semibold text-sky-700" />
+                  <p className="font-semibold text-base mx-1 w-40">Contract Duration</p>
+                  <p className="text-sm font-semibold text-indigo-700 mx-1">
+                    {JobDetails?.job_duration || "1 Week"}
                   </p>
                 </div>
                 <div className="flex items-center justify-start mb-3">
@@ -227,7 +253,7 @@ export default function JobDetails() {
               <div className="md:px-8 px-2 md:mx-4 flex flex-wrap items-center justify-center">
                 {/* card */}
 
-                {machingData?.length === 0 ? (
+                {relatedJobs.length === 0 ? (
                   <>
                     <div className="md:w-96 w-full py-3 mx-4 my-2 flex items-center md:items-start px-6 justify-start md:justify-center flex-col rounded bg-gray-50">
                       <p className="text-xs font-semibold text-red-600 uppercase">
@@ -236,7 +262,7 @@ export default function JobDetails() {
                     </div>
                   </>
                 ) : (
-                  machingData?.map((item) => {
+                  relatedJobs.map((item) => {
                     return (
                       <div
                         key={item?._id}
@@ -248,7 +274,7 @@ export default function JobDetails() {
                             height={70}
                             className="flex rounded-full mb-4 md:mb-0"
                             src={
-                              JobDetails?.user?.image ||
+                              item?.user?.image ||
                               "https://xsgames.co/randomusers/avatar.php?g=male"
                             }
                             alt="no image"
@@ -278,7 +304,7 @@ export default function JobDetails() {
                               Salary{" "}
                             </p>
                             <p className=" text-sm text-gray-800 mx-1">
-                              {item?.salary}
+                              ৳ {item?.salary}
                             </p>
                           </div>
                           <div className="flex px-1 md:px-4 items-center justify-center mb-2">

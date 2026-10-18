@@ -1,7 +1,6 @@
+# Contributing to KajKhoj
 
-# Contributing to Epics-Project-Jobsearch
-
-We are thrilled to have you contribute to **Epics-Project-Jobsearch**! Your support and help are much appreciated, especially during Hacktoberfest 🎉.
+KajKhoj is a Web Technology course project by **Mutasim Billah** ([@1467mutasim-ctrl](https://github.com/1467mutasim-ctrl)) and **Suraiya Sultana** ([@suraiyasultana826](https://github.com/suraiyasultana826)), Department of ICT, Bangladesh University of Professionals (BUP), Bangladesh. Suggestions and fixes are welcome!
 
 ## Getting Started
 
@@ -18,8 +17,8 @@ Follow the steps below to set up the project locally:
 2. Clone your forked repository locally:
 
     ```bash
-    git clone https://github.com/your-username/epics-project-jobsearch.git
-    cd epics-project-jobsearch
+    git clone <your-fork-url>
+    cd kajkhoj
     ```
 
 3. Install the dependencies:
@@ -52,7 +51,7 @@ To run the app in production:
 
 ```bash
 npm run build
-npm run preview
+npm start
 ```
 
 ### Contributing Guidelines
@@ -67,7 +66,7 @@ We follow a few guidelines to ensure a smooth collaboration:
     ```
 
 3. **Pull Requests:** Submit a pull request once your changes are tested and ready for review. Include a description of what was changed and why.
-4. **Testing:** Ensure that all features are tested locally before making a PR.
+4. **Testing:** Ensure that all features are tested locally before making a PR (`npm run test:api` runs the API test suite).
 5. **Code Style:** Follow the project's code style (Next.js, Tailwind CSS, Redux) and make sure to lint your code with:
 
     ```bash
@@ -76,13 +75,12 @@ We follow a few guidelines to ensure a smooth collaboration:
 
 ### Issues
 
-Browse open issues on the [Issues](https://github.com/your-repo/issues) tab. If you find one you'd like to work on, comment to let us know, and we'll assign it to you. Feel free to open new issues if you discover any bugs or have suggestions for improvements.
+Browse open issues on the repository's Issues tab. If you find one you'd like to work on, comment to let us know, and we'll assign it to you. Feel free to open new issues if you discover any bugs or have suggestions for improvements.
 
 ### Feature Requests
 
 If you have an idea for a feature or enhancement, feel free to open an issue to discuss it before working on it.
 
-### Hacktoberfest Contributions 🎃
+### Contact
 
-All contributions during **Hacktoberfest** (October) are welcome! This includes bug fixes, new features, documentation improvements, and more. Just make sure to label your pull request with the **hacktoberfest** tag.
-
+Reach the maintainers through their GitHub profiles: [Mutasim Billah](https://github.com/1467mutasim-ctrl) · [Suraiya Sultana](https://github.com/suraiyasultana826).

@@ -16,16 +16,22 @@ export default function ApplicationsDetail() {
   const userId = user?._id;
 
   useEffect(() => {
-    if (!userId || !Cookies.get("token")) {
+    if (!Cookies.get("token") || !localStorage.getItem("user")) {
       router.push("/auth/login");
     }
-  }, [user, userId, Cookies]);
+  }, [router]);
 
-  const { data, error, isLoading } = useSWR("/get-application-details", () =>
-    get_application_details(id)
+  const { data, error, isLoading } = useSWR(
+    id && userId ? `/get-application-details/${id}` : null,
+    () => get_application_details(id)
   );
 
-  if (error) return toast.error(error) && router.push("/frontend/postedJob");
+  useEffect(() => {
+    if (error || (data && !data.success)) {
+      toast.error(data?.message || "Failed to load application details");
+      router.push("/frontend/postedJob");
+    }
+  }, [data, error, router]);
 
   return (
     <>

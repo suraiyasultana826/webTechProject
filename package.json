@@ -2,11 +2,19 @@
   "name": "kajkhoj",
   "version": "0.1.0",
   "private": true,
+  "description": "KajKhoj — week-based job portal for local and agricultural workers in Bangladesh (Web Technology project, Dept. of ICT, BUP)",
+  "author": "Mutasim Billah & Suraiya Sultana",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db": "node scripts/dev-db.js",
+    "test:api": "node scripts/test-all-apis.js",
+    "seed": "node scripts/seed-sample-data.js"
+  },
+  "imports": {
+    "@/*": "./*"
   },
   "dependencies": {
     "@next/font": "13.2.3",
@@ -18,6 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto": "^1.0.1",
+    "dotenv": "^18.0.8",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "formidable": "^2.1.1",
@@ -52,6 +61,7 @@
     "autoprefixer": "^10.4.13",
     "copy-webpack-plugin": "^11.0.0",
     "file-loader": "^6.2.0",
+    "mongodb-memory-server": "^11.3.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "worker-loader": "^3.0.8"

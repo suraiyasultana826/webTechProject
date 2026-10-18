@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import useSWR from "swr";
 
 export default function PostedJobsDetails() {
@@ -19,17 +19,22 @@ export default function PostedJobsDetails() {
   const [application, setApplication] = useState([]);
 
   useEffect(() => {
-    if (!userId || !Cookies.get("token")) {
+    if (!Cookies.get("token") || !localStorage.getItem("user")) {
       router.push("/auth/login");
     }
-  }, [user, userId, Cookies]);
+  }, [router]);
 
-  const { data, error, isLoading } = useSWR(`/get-all-Application`, () =>
-    get_all_applications(id)
+  const { data, error, isLoading } = useSWR(
+    id && userId ? `/get-all-Application/${id}` : null,
+    () => get_all_applications(id)
   );
 
   useEffect(() => {
-    if (data) setApplication(data?.data);
+    if (data?.success) {
+      setApplication(data.data);
+    } else if (data) {
+      toast.error(data.message);
+    }
   }, [data]);
 
   if (error) toast.error(error);
@@ -52,6 +57,7 @@ export default function PostedJobsDetails() {
               <ApplicationsDataTable application={application} />
             </div>
           </div>
+          <ToastContainer />
         </>
       )}
     </>

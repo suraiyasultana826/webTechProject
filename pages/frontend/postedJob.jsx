@@ -39,17 +39,17 @@ function PostedJobs() {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    if (!id || !Cookies.get("token")) {
+    if (!Cookies.get("token") || !localStorage.getItem("user")) {
       setShowNotification(true);
       setTimeout(() => {
         setShowNotification(false);
         router.push("/auth/login");
       }, 4500);
     }
-  }, [id, router]);
+  }, [router]);
 
   const { data, error, isLoading } = useSWR(
-    id && Cookies.get("token") ? "/getMyPostedJobs" : null,
+    id && Cookies.get("token") ? `/getMyPostedJobs/${id}` : null,
     () => get_my_posted_job(id)
   );
 

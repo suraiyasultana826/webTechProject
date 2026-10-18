@@ -6,65 +6,90 @@ import { useRouter } from "next/router";
 
 export default function JobsCard({ job, posted }) {
   const router = useRouter();
+
+  const salaryDisplay = job?.salary_period
+    ? `৳${job?.salary} / ${job?.salary_period.replace('per ', '')}`
+    : job?.job_type === "week-based" || job?.job_type === "weekly"
+    ? `৳${job?.salary} / week`
+    : `৳${job?.salary} / month`;
+
   return (
     <div
       key={job._id}
-      className="mx-auto transition-all duration-1000 shadow-2xl p-2 rounded-md"
+      className="mx-auto h-full w-full transition-all duration-300 hover:shadow-2xl shadow-md p-4 rounded-xl bg-white bg-opacity-90 flex flex-col justify-between border border-gray-100"
     >
-      <div className="mx-auto justify-center p-2 flex items-center">
-        <Image
-          width={70}
-          height={70}
-          className="rounded-full "
-          src={
-            job?.user?.image ||
-            "https://xsgames.co/randomusers/avatar.php?g=male"
-          }
-          alt="no image"
-        />
-        <div className="flex flex-col mx-2 px-2">
-          <h1 className="text-xl md:text-2xl font-semibold">
-            {job?.user?.name}
-          </h1>
-          <p className="text-xs sm:text-sm md:text-base text-gray-800">
-            {job?.company}
-          </p>
+      <div>
+        <div className="flex items-center space-x-3 mb-3">
+          <Image
+            width={60}
+            height={60}
+            className="rounded-full object-cover border-2 border-indigo-100"
+            src={
+              job?.user?.image ||
+              "https://xsgames.co/randomusers/avatar.php?g=male"
+            }
+            alt={job?.company || "Company logo"}
+          />
+          <div className="flex flex-col">
+            <h1 className="text-lg font-bold text-gray-900 leading-tight">
+              {job?.title}
+            </h1>
+            <p className="text-xs sm:text-sm text-indigo-700 font-medium">
+              {job?.company}
+            </p>
+          </div>
+        </div>
+
+        {/* Badges */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 capitalize">
+            {job?.job_type || "Contract"}
+          </span>
+          {job?.job_duration && (
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+              📅 {job.job_duration}
+            </span>
+          )}
+          {job?.job_category && (
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+              {job.job_category}
+            </span>
+          )}
+        </div>
+
+        {/* Details */}
+        <div className="space-y-1 text-sm text-gray-600 mb-4 bg-gray-50 p-2.5 rounded-lg">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-500 font-medium">Compensation:</span>
+            <span className="font-bold text-gray-900 text-sm">
+              {salaryDisplay}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-500 font-medium">Deadline:</span>
+            <span className="font-medium text-gray-800 text-xs">
+              {job?.job_deadline
+                ? new Date(job.job_deadline).toLocaleDateString("en-GB")
+                : "Open"}
+            </span>
+          </div>
         </div>
       </div>
-      <div className="mb-4 flex min-w-fit items-start justify-center py-2 flex-col">
-        <div className="flex px-2 py-2 items-center justify-center ">
-          <BsDot className="text-4xl font-extrabold text-sky-700" />
-          <h1 className="text-lg text-gray-900 w-20">Salary :</h1>
-          <p className="text-base font-semibold">
-            &nbsp;&nbsp;&nbsp;₹{job?.salary}/ month
-          </p>
-        </div>
-        <div className="flex px-2 py-2 items-center justify-center">
-          <BsDot className="text-4xl font-extrabold text-sky-700" />
-          <h1 className="text-lg text-gray-900 w-20">Deadline {":"}</h1>
-          <p className="text-base  font-semibold">
-            &nbsp;&nbsp;&nbsp;
-            {new Date(`${job?.job_deadline}`).toLocaleDateString("en-GB")}
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="text-center min-w-max mx-auto px-6 rounded-2xl py-1 bg-indigo-200 text-indigo-900 capitalize">
-          <p>{job?.title} </p>
-        </div>
+
+      <div className="mt-2">
         {posted ? (
           <button
             onClick={() => router.push(`/frontend/detailPostedJob/${job?._id}`)}
-            className="my-2 py-2 px-4  border border-sky-700   rounded flex items-center justify-center transition-all duration-700 hover:bg-indigo-600 hover:text-white text-sky-700 font-semibold"
+            className="w-full py-2 px-3 border border-indigo-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-indigo-600 hover:text-white text-indigo-700 font-semibold text-sm shadow-sm"
           >
-            View Applications <AiOutlineArrowRight className="mx-2 text-xl" />
+            Review Applications <AiOutlineArrowRight className="ml-2 text-base" />
           </button>
         ) : (
           <button
             onClick={() => router.push(`/frontend/jobDetails/${job?._id}`)}
-            className="my-2 py-2 px-4 cursor-pointer border border-sky-700 rounded-md flex items-center justify-center transition-all duration-700 hover:bg-indigo-600 hover:text-white text-sky-700 font-semibold"
+            className="w-full py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg flex items-center justify-center transition-all duration-300 font-semibold text-sm shadow-sm"
           >
-            View Detail <AiOutlineArrowRight className="mx-2 text-xl" />
+            View Opportunity Details <AiOutlineArrowRight className="ml-2 text-base" />
           </button>
         )}
       </div>

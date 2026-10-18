@@ -28,13 +28,15 @@ export default function PostAJob() {
     user: user?._id,
     title: "",
     salary: 0,
+    salary_period: "per week",
+    job_duration: "1 Week",
     email: "",
     company: "",
     description: "",
     job_category: "",
-    job_type: "",
+    job_type: "week-based",
     job_experience: "",
-    job_vacancy: 0,
+    job_vacancy: 1,
     job_deadline: "",
   });
 
@@ -109,26 +111,49 @@ export default function PostAJob() {
       return;
     }
 
-    if (formData.user == null) {
+    if (formData.user == null && user?._id == null) {
       return toast.error("Please Login First");
     }
 
-    const res = await post_job(formData);
-    if (res.success) {
+    const payload = {
+      ...formData,
+      user: formData.user || user?._id,
+    };
+
+    const res = await post_job(payload);
+    if (res?.success) {
       toast.success(res.message);
       setTimeout(() => {
         router.push("/");
       }, 1000);
     } else {
-      toast.error(res.message);
+      toast.error(res?.message || "Failed to post job");
     }
   };
 
-  const options = [
+  const jobTypeOptions = [
+    { value: "week-based", label: "Week-based Contract" },
+    { value: "daily", label: "Daily Wage" },
     { value: "fulltime", label: "Full Time" },
     { value: "parttime", label: "Part Time" },
-    { value: "internship", label: "Internship" },
     { value: "contract", label: "Contract" },
+    { value: "internship", label: "Internship" },
+  ];
+
+  const salaryPeriodOptions = [
+    { value: "per week", label: "৳ / Week (Weekly Wage)" },
+    { value: "per day", label: "৳ / Day (Daily Wage)" },
+    { value: "per month", label: "৳ / Month (Monthly Salary)" },
+    { value: "total project", label: "Total Project Contract" },
+  ];
+
+  const durationOptions = [
+    { value: "1 Week", label: "1 Week Contract" },
+    { value: "2 Weeks", label: "2 Weeks Contract" },
+    { value: "3 Weeks", label: "3 Weeks Contract" },
+    { value: "4 Weeks (1 Month)", label: "4 Weeks Contract" },
+    { value: "Ongoing Weekly", label: "Ongoing Weekly Assignment" },
+    { value: "Full Term", label: "Full Term" },
   ];
 
   const formFields = [
@@ -136,53 +161,53 @@ export default function PostAJob() {
       name: "title",
       label: "Job Title",
       type: "text",
-      placeholder: "Enter title of job",
+      placeholder: "e.g. Agricultural Farmhand, Electrician, Carpenter",
     },
     {
       name: "salary",
-      label: "Salary",
+      label: "Salary / Wage Amount (৳)",
       type: "number",
-      placeholder: "Enter salary for this job",
+      placeholder: "e.g. 3500",
     },
     {
       name: "email",
-      label: "Email",
+      label: "Contact Email",
       type: "email",
       placeholder: "Enter email to be contacted for this job",
     },
     {
       name: "company",
-      label: "Organization Name",
+      label: "Organization / Farm / Employer Name",
       type: "text",
-      placeholder: "Enter organization name",
+      placeholder: "Enter organization or farm name",
     },
     {
       name: "description",
-      label: "Description",
+      label: "Job Description & Responsibilities",
       type: "textarea",
-      placeholder: "Enter description of job",
+      placeholder: "Describe the tasks, tools required, and work expectations",
     },
     {
       name: "job_category",
       label: "Job Category",
       type: "text",
-      placeholder: "Enter category of job",
+      placeholder: "e.g. Agriculture, Construction, Electrical, Plumbing",
     },
     {
       name: "job_experience",
-      label: "Job Experience",
+      label: "Experience Required",
       type: "text",
-      placeholder: "Enter experience required for this job",
+      placeholder: "e.g. Beginner, 1 Year, 2+ Years",
     },
     {
       name: "job_vacancy",
-      label: "Job Vacancy",
+      label: "Number of Open Positions",
       type: "number",
       placeholder: "Enter number of vacancies",
     },
     {
       name: "job_deadline",
-      label: "Job Deadline",
+      label: "Application Deadline",
       type: "date",
       min: currentDate,
     },
@@ -205,7 +230,7 @@ export default function PostAJob() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-2"
             >
-              Post a New Job
+              Post a New Opportunity
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -213,7 +238,7 @@ export default function PostAJob() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="text-center text-gray-600 mb-8"
             >
-              Fill in the details below to post your job opportunity
+              Post week-based contracts, daily wage, or regular jobs for local & agricultural workers
             </motion.p>
 
             <motion.form
@@ -229,7 +254,7 @@ export default function PostAJob() {
                     key={field.name}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                    transition={{ duration: 0.3, delay: 0.05 * index }}
                     className={field.type === "textarea" ? "col-span-full" : ""}
                   >
                     <label htmlFor={field.name} className={labelStyles}>
@@ -269,43 +294,63 @@ export default function PostAJob() {
                   </motion.div>
                 ))}
 
+                {/* Week-Based Job Type */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.9 }}
-                  className="col-span-full"
+                  transition={{ duration: 0.3, delay: 0.6 }}
+                  className="col-span-1"
                 >
-                  <label className={labelStyles}>Job Type</label>
+                  <label className={labelStyles}>Job Contract Type</label>
                   <Select
+                    instanceId="job-type-select"
+                    defaultValue={jobTypeOptions[0]}
                     onChange={(e) =>
                       setFormData({ ...formData, job_type: e.value })
                     }
-                    options={options}
-                    placeholder="Please select job type"
+                    options={jobTypeOptions}
+                    placeholder="Select job contract type"
                     className="mt-1"
-                    styles={{
-                      control: (base) => ({
-                        ...base,
-                        backgroundColor: "rgba(255, 255, 255, 0.8)",
-                        backdropFilter: "blur(8px)",
-                        borderColor: "#E5E7EB",
-                        borderRadius: "0.5rem",
-                        padding: "0.2rem",
-                        boxShadow: "none",
-                        "&:hover": {
-                          borderColor: "#5ea97c",
-                        },
-                      }),
-                      option: (base, state) => ({
-                        ...base,
-                        backgroundColor: state.isSelected ? "#2f7d4f" : "white",
-                        "&:hover": {
-                          backgroundColor: state.isSelected
-                            ? "#2f7d4f"
-                            : "#F3F4F6",
-                        },
-                      }),
-                    }}
+                  />
+                </motion.div>
+
+                {/* Salary Frequency / Period */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.7 }}
+                  className="col-span-1"
+                >
+                  <label className={labelStyles}>Wage / Salary Frequency</label>
+                  <Select
+                    instanceId="salary-period-select"
+                    defaultValue={salaryPeriodOptions[0]}
+                    onChange={(e) =>
+                      setFormData({ ...formData, salary_period: e.value })
+                    }
+                    options={salaryPeriodOptions}
+                    placeholder="Select payment period"
+                    className="mt-1"
+                  />
+                </motion.div>
+
+                {/* Duration in Weeks */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.8 }}
+                  className="col-span-full"
+                >
+                  <label className={labelStyles}>Contract Duration (Weeks / Term)</label>
+                  <Select
+                    instanceId="duration-select"
+                    defaultValue={durationOptions[0]}
+                    onChange={(e) =>
+                      setFormData({ ...formData, job_duration: e.value })
+                    }
+                    options={durationOptions}
+                    placeholder="Select contract duration"
+                    className="mt-1"
                   />
                 </motion.div>
               </div>
@@ -321,9 +366,9 @@ export default function PostAJob() {
                   className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold 
                            transform transition-all duration-200 hover:bg-indigo-700 
                            hover:scale-105 focus:outline-none focus:ring-2 
-                           focus:ring-indigo-500 focus:ring-offset-2"
+                           focus:ring-indigo-500 focus:ring-offset-2 shadow-lg"
                 >
-                  Post Job
+                  Post Opportunity
                 </button>
               </motion.div>
             </motion.form>

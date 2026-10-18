@@ -22,7 +22,7 @@ export default function Organizations() {
         (org) =>
           org.name.toLowerCase().includes(searchTerm) ||
           org.location.toLowerCase().includes(searchTerm) ||
-          org.type.toLowerCase().includes(searchTerm)
+          org.category.toLowerCase().includes(searchTerm)
       );
       setFilteredOrgs(filtered);
     }

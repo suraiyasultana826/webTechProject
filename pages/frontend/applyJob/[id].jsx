@@ -14,10 +14,7 @@ export default function ApplyJob() {
   const activeUser = useSelector((state) => state.User.userData);
   const [formikData, setFormikData] = useState({
     name: "",
-    email: activeUser?.email,
     about: "",
-    job: id,
-    user: activeUser?._id,
   });
   const [file, setFile] = useState(null);
   const [coverLetterFile, setCoverLetterFile] = useState(null); // State for cover letter
@@ -27,7 +24,11 @@ export default function ApplyJob() {
   const coverLetterInputRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const { name, email, about, job, user } = formikData;
+  const { name, about } = formikData;
+  // Read from the store at submit time so a page refresh doesn't lose them
+  const email = activeUser?.email;
+  const user = activeUser?._id;
+  const job = id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,22 +37,21 @@ export default function ApplyJob() {
     setError({});
 
     // Validation checks
-    if (!name) {
-      setError((prev) => ({ ...prev, name: "Name Field is required" }));
-      return;
-    }
-    if (!email) {
-      setError((prev) => ({ ...prev, email: "Email Field is required" }));
-      return;
-    }
-    if (!user) {
+    if (!user || !email) {
       return toast.error("Please Login First");
     }
     if (!job) {
       return toast.error("Please Follow Apply Process");
     }
-    if (!about) {
-      setError((prev) => ({ ...prev, about: "Cover letter is required." }));
+    if (!name) {
+      setError((prev) => ({ ...prev, name: "Name Field is required" }));
+      return;
+    }
+    if (!about || about.trim().length < 10) {
+      setError((prev) => ({
+        ...prev,
+        about: "Cover letter must be at least 10 characters.",
+      }));
       return;
     }
     // Check for CV upload
@@ -77,9 +77,9 @@ export default function ApplyJob() {
     const res = await apply_job(form);
     if (res.success) {
       toast.success("Your Application is Submitted, Redirecting...");
-      setTimeout(() => router.push("/"), 1000);
+      setTimeout(() => router.push("/frontend/dashboard"), 1000);
     } else {
-      toast.error("Something Went Wrong");
+      toast.error(res.message || "Something Went Wrong");
     }
   };
 
@@ -123,7 +123,7 @@ export default function ApplyJob() {
               </label>
               <input
                 name="email"
-                value={email}
+                value={email || ""}
                 disabled
                 type="email"
                 className="w-full p-2 border rounded bg-gray-100"
@@ -168,7 +168,7 @@ export default function ApplyJob() {
                   name="cv"
                   onChange={(e) => {
                     setFile(e.target.files[0]);
-                    toast.success("Resume uploaded successfully.");
+                    toast.success("Resume selected.");
                   }}
                   type="file"
                   className="hidden"

@@ -25,7 +25,7 @@ const NgosCard = ({ data }) => {
         stiffness: 90, 
         delay: 0.1, 
       }}
-      className="w-full md:w-[420px] m-2"
+      className="w-full h-full"
     >
       <Card className="h-full min-h-[300px] transition-all duration-400 hover:shadow-xl flex flex-col justify-between bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg rounded-2xl border border-white border-opacity-20 shadow-lg">
         <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-xl rounded-t-2xl">
@@ -50,7 +50,7 @@ const NgosCard = ({ data }) => {
           <CardContent className="pb-4 bg-white bg-opacity-50 backdrop-filter backdrop-blur-xl">
             <div className="text-md text-gray-700 leading-relaxed">
               {isExpanded ? data.description : `${data.description.substring(0, 200)}`}
-              {data.description.length > 150 && (
+              {data.description.length > 200 && (
                 <>
                   {!isExpanded && "..."}
                   <button

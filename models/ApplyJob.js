@@ -1,22 +1,30 @@
 import mongoose from "mongoose";
+// Register the referenced models so populate() works in any route that only imports ApplyJob.
+import "./User";
+import "./Job";
 
 const ApplyJobSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     job: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",
+      required: true,
     },
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
+      trim: true,
+      lowercase: true,
     },
     about: {
       type: String,
@@ -35,7 +43,4 @@ const ApplyJobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mongoose.models = {};
-const AppliedJob = mongoose.model("AppliedJobStatus", ApplyJobSchema);
-
-export default AppliedJob;
+export default mongoose.models.AppliedJobStatus || mongoose.model("AppliedJobStatus", ApplyJobSchema);

@@ -40,14 +40,14 @@ export default function Dashboard() {
   const id = activeUser?._id;
 
   useEffect(() => {
-    if (!id || !Cookies.get("token")) {
+    if (!Cookies.get("token") || !localStorage.getItem("user")) {
       router.push("/auth/login");
     }
-  }, [activeUser, id, router]);
+  }, [router]);
 
   useEffect(() => {
-    fetchAppliedJobs();
-  }, []);
+    if (id) fetchAppliedJobs();
+  }, [id]);
 
   const fetchAppliedJobs = async () => {
     const res = await get_my_applied_job(id);
