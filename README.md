@@ -77,5 +77,4 @@ Executes the live HTTP test suite covering all 13 API endpoints and 5 weak spot 
 
 ---
 
-## 📜 License & Credits
-KajKhoj is developed by Mutasim Billah and Suraiya Sultana as a redesigned derivative of [JobSewa](https://github.com/Devmangrani/JobSewa) by Dev Mangrani (Copyright © 2024), distributed under the **Apache License 2.0** (see `LICENSE`).
+
