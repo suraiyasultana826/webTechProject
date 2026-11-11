@@ -37,15 +37,8 @@ export default async function handler(req, res) {
 
   await ConnectDB();
 
-  return new Promise((resolve) => {
-    validateToken(req, res, async () => {
-      try {
-        await applyToJob(req, res);
-      } finally {
-        resolve();
-      }
-    });
-  });
+  // Resolves whether the token is rejected or the application is processed
+  return validateToken(req, res, () => applyToJob(req, res));
 }
 
 const applyToJob = (req, res) => {
@@ -117,6 +110,17 @@ const applyToJob = (req, res) => {
             res.status(404).json({
               success: false,
               message: 'Target job opportunity does not exist or has been removed.',
+            });
+            return resolve();
+          }
+
+          // The deadline day itself is still open (stored as midnight UTC of that date)
+          const deadlineEnd = new Date(targetJob.job_deadline).getTime() + 24 * 60 * 60 * 1000;
+          if (Date.now() >= deadlineEnd) {
+            discardUpload();
+            res.status(410).json({
+              success: false,
+              message: 'The application deadline for this job has passed.',
             });
             return resolve();
           }

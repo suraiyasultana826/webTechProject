@@ -121,7 +121,7 @@
 .submit-btn {
   width: 100%;
   padding: 10px;
-  background-color: blue;
+  background-color: #2f7d4f;
   color: white;
   border: none;
   border-radius: 8px;
@@ -132,7 +132,7 @@
 }
 
 .submit-btn:hover {
-  background-color: #000000;
+  background-color: #1f5133;
 }
 
 .sign-up {

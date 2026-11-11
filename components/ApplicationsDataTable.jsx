@@ -137,8 +137,9 @@ export default function ApplicationsDataTable({ application }) {
         keyField="_id"
         pagination
         title={`Total Applications : ${Data?.length}`}
-        fixedHeader
-        fixedHeaderScrollHeight="79%"
+        noDataComponent={
+          <p className="py-10 text-center text-gray-600">No one has applied to this job yet.</p>
+        }
         selectableRows
         selectableRowsHighlight
         subHeader
@@ -152,7 +153,7 @@ export default function ApplicationsDataTable({ application }) {
             placeholder={"Search with Applicant  name..."}
           />
         }
-        className="h-screen bg-white"
+        className="bg-white"
       />
     </>
   );

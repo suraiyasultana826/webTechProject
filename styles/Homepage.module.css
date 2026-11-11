@@ -165,13 +165,13 @@
   position: absolute;
   right: 0.5rem;
   font-size: 1.2rem;
-  color: rgb(0, 0, 183);
+  color: #2f7d4f;
   cursor: pointer;
 }
 
 .searchButton {
   padding: 0.6rem 1.5rem;
-  background-color: rgb(0, 0, 183);
+  background-color: #2f7d4f;
   color: white;
   border-radius: 80px;
   font-weight: 500;
@@ -181,7 +181,7 @@
 }
 
 .searchButton:hover {
-  background-color: #000;
+  background-color: #1f5133;
   color: #fff;
 }
 
@@ -202,7 +202,7 @@
 
 .tag {
   background-color: #fff8eb;
-  color: rgb(0, 0, 183);
+  color: #2f7d4f;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   cursor: pointer;
@@ -275,6 +275,8 @@
   border-radius: 12px;
   transition: opacity 0.3s ease;
   opacity: 0;
+  /* decorative overlay must never swallow clicks meant for the card's buttons */
+  pointer-events: none;
 }
 
 .jobCardWrapper:hover {

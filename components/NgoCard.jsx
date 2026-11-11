@@ -27,8 +27,8 @@ const NgosCard = ({ data }) => {
       }}
       className="w-full h-full"
     >
-      <Card className="h-full min-h-[300px] transition-all duration-400 hover:shadow-xl flex flex-col justify-between bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg rounded-2xl border border-white border-opacity-20 shadow-lg">
-        <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-xl rounded-t-2xl">
+      <Card className="h-full min-h-[300px] transition-all duration-300 hover:shadow-xl flex flex-col justify-between bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden">
+        <div className="bg-white">
           <CardHeader className="flex flex-col items-center space-y-4 pb-2">
             <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-white border-opacity-50">
               <img
@@ -41,13 +41,13 @@ const NgosCard = ({ data }) => {
               <h3 className="font-bold text-xl leading-tight min-h-[3rem] flex items-center justify-center text-gray-800">
                 {data.name}
               </h3>
-              <Badge variant="secondary" className="text-xs bg-white bg-opacity-70 text-gray-700">
+              <Badge variant="secondary" className="text-xs bg-gray-100 text-gray-700">
                 {data.category}
               </Badge>
             </div>
           </CardHeader>
 
-          <CardContent className="pb-4 bg-white bg-opacity-50 backdrop-filter backdrop-blur-xl">
+          <CardContent className="pb-4 bg-white">
             <div className="text-md text-gray-700 leading-relaxed">
               {isExpanded ? data.description : `${data.description.substring(0, 200)}`}
               {data.description.length > 200 && (
@@ -65,7 +65,7 @@ const NgosCard = ({ data }) => {
           </CardContent>
         </div>
        
-        <CardFooter className="mt-auto bg-white bg-opacity-60 backdrop-filter backdrop-blur-xl rounded-b-2xl">
+        <CardFooter className="mt-auto bg-white">
           <a
             href={data.link}
             target="_blank"
@@ -74,7 +74,7 @@ const NgosCard = ({ data }) => {
           >
             <Button
               variant="outline"
-              className="w-full group transition-all duration-200 bg-white bg-opacity-70 hover:bg-opacity-90 text-gray-800 border border-white border-opacity-50 rounded-xl"
+              className="w-full group transition-all duration-200 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-xl"
             >
               More details
               <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />

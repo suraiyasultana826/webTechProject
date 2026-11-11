@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { readJson } from "@/Services/session";
 
 // Post job API
 export const post_job = async (formData) => {
@@ -11,7 +12,7 @@ export const post_job = async (formData) => {
       },
       body: JSON.stringify(formData),
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in post job (service) => ", error);
     return { success: false, message: error.message };
@@ -37,7 +38,7 @@ export const get_job = async (params = {}) => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting job (service) => ", error);
     return { success: false, message: error.message };
@@ -51,7 +52,7 @@ export const get_specified_job = async (id) => {
       method: "GET",
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting specified job (service) => ", error);
     return { success: false, message: error.message };
@@ -66,7 +67,7 @@ export const apply_job = async (formData) => {
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       body: formData,
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in apply job (service) => ", error);
     return { success: false, message: error.message };
@@ -80,7 +81,7 @@ export const get_my_applied_job = async (id) => {
       method: "GET",
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting my applied jobs (service) => ", error);
     return { success: false, message: error.message };
@@ -94,7 +95,7 @@ export const get_my_posted_job = async (id) => {
       method: "GET",
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting my posted jobs (service) => ", error);
     return { success: false, message: error.message };
@@ -108,7 +109,7 @@ export const get_all_applications = async (id) => {
       method: "GET",
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting applications of specified job (service) => ", error);
     return { success: false, message: error.message };
@@ -126,7 +127,7 @@ export const change_application_status = async (formData) => {
       },
       body: JSON.stringify(formData),
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in updating application status (service) => ", error);
     return { success: false, message: error.message };
@@ -141,7 +142,7 @@ export const download_cv = async (fileName) => {
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
     if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
+      const data = await readJson(res).catch(() => ({}));
       return { success: false, message: data.message || "Failed to download CV" };
     }
     return { success: true, blob: await res.blob() };
@@ -158,7 +159,7 @@ export const get_application_details = async (id) => {
       method: "GET",
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting application details (service) => ", error);
     return { success: false, message: error.message };

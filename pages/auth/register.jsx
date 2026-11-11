@@ -11,8 +11,11 @@ export default function Register() {
   const router = useRouter();
 
   useEffect(() => {
-    if (Cookies.get("token")) {
+    if (Cookies.get("token") && localStorage.getItem("user")) {
       router.push("/");
+    } else {
+      Cookies.remove("token");
+      localStorage.removeItem("user");
     }
   }, [router]);
 

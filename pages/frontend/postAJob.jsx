@@ -131,6 +131,26 @@ export default function PostAJob() {
     }
   };
 
+  // Render dropdown menus in a portal on <body> so the animated (transformed)
+  // field wrappers below can't paint over an open menu.
+  const selectMenuProps = {
+    menuPortalTarget: typeof document !== "undefined" ? document.body : null,
+    menuPosition: "absolute",
+    menuPlacement: "auto",
+    styles: { menuPortal: (base) => ({ ...base, zIndex: 9999 }) },
+    // Match the site's forest-green theme instead of react-select's default blue
+    theme: (theme) => ({
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary: "#2f7d4f",
+        primary75: "#5ea97c",
+        primary50: "#bcdfc8",
+        primary25: "#f0f8f2",
+      },
+    }),
+  };
+
   const jobTypeOptions = [
     { value: "week-based", label: "Week-based Contract" },
     { value: "daily", label: "Daily Wage" },
@@ -311,6 +331,7 @@ export default function PostAJob() {
                     options={jobTypeOptions}
                     placeholder="Select job contract type"
                     className="mt-1"
+                    {...selectMenuProps}
                   />
                 </motion.div>
 
@@ -331,6 +352,7 @@ export default function PostAJob() {
                     options={salaryPeriodOptions}
                     placeholder="Select payment period"
                     className="mt-1"
+                    {...selectMenuProps}
                   />
                 </motion.div>
 
@@ -351,6 +373,7 @@ export default function PostAJob() {
                     options={durationOptions}
                     placeholder="Select contract duration"
                     className="mt-1"
+                    {...selectMenuProps}
                   />
                 </motion.div>
               </div>

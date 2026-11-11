@@ -22,7 +22,7 @@ function NotificationBar() {
       className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-5 px-6 py-3 bg-gray-800 text-white rounded-md shadow-lg z-50"
     >
       <span>To access this page, please Login. </span>
-      <Link href="/auth/login" className="text-blue-400 underline ml-2">
+      <Link href="/auth/login" className="text-indigo-600 underline ml-2">
         Redirecting...
       </Link>
     </motion.div>
@@ -125,6 +125,12 @@ function PostedJobs() {
                     className={styles.noJobsMessage}
                   >
                     You haven&apos;t posted any jobs yet.
+                    <Link
+                      href="/frontend/postAJob"
+                      className="block w-fit mx-auto mt-4 px-5 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+                    >
+                      Post a job
+                    </Link>
                   </motion.p>
                 )}
               </motion.div>

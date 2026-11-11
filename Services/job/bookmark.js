@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { readJson } from "@/Services/session";
 
 // Bookmark job API
 export const book_mark_job = async (formData) => {
@@ -11,7 +12,7 @@ export const book_mark_job = async (formData) => {
       },
       body: JSON.stringify(formData),
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in bookmark job (service) => ", error);
     return { success: false, message: error.message };
@@ -27,7 +28,7 @@ export const get_book_mark_job = async (id) => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in getting bookmark job (service) => ", error);
     return { success: false, message: error.message };
@@ -43,7 +44,7 @@ export const check_job_bookmarked = async (userId, jobId) => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error checking bookmark status (service) => ", error);
     return { success: false, bookmarked: false };
@@ -62,7 +63,7 @@ export const delete_book_mark_job = async (payload) => {
       },
       body: JSON.stringify(bodyData),
     });
-    return await res.json();
+    return await readJson(res);
   } catch (error) {
     console.error("Error in deleting bookmark job (service) => ", error);
     return { success: false, message: error.message };

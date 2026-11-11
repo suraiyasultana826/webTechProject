@@ -105,6 +105,15 @@ const postAJob = async (req, res) => {
     });
   }
 
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+  if (new Date(job_deadline).getTime() < startOfToday.getTime()) {
+    return res.status(400).json({
+      success: false,
+      message: 'Application deadline cannot be in the past.',
+    });
+  }
+
   if (String(user) !== req.user?.id) {
     return res.status(403).json({
       success: false,

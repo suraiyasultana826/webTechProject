@@ -94,95 +94,45 @@ export default function JobDetails() {
             <div className="w-full h-40 bg-gray-50 text-sky-700 font-bold flex items-center justify-center flex-col">
               <h1 className="text-3xl">Job Details</h1>
             </div>
-            <div className="flex items-center  justify-center w-full py-10">
-              <div className="flex w-full px-8 md:px-20 items-start md:flex-row flex-col md:justify-between justify-center">
-                <div className="flex mb-1 items-center justify-center">
+            <div className="w-full max-w-6xl px-4 md:px-8 py-10">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div className="flex items-center gap-4 min-w-0">
                   <Image
                     src={
                       JobDetails?.user?.image ||
                       "https://xsgames.co/randomusers/avatar.php?g=male"
                     }
-                    alt="no-image"
-                    className="rounded-full mb-2"
-                    width={100}
-                    height={100}
+                    alt={JobDetails?.company || "Employer"}
+                    className="rounded-full shrink-0"
+                    width={88}
+                    height={88}
                   />
-                  <div className="px-4 mx-2 flex flex-col items-start justify-center">
-                    <p className="font-semibold text-base mb-1">
-                      {JobDetails?.title}{" "}
+                  <div className="min-w-0">
+                    <p className="font-semibold text-xl md:text-2xl leading-tight">
+                      {JobDetails?.title}
                     </p>
-                    <p className=" text-sm text-gray-800 mb-1">
+                    <p className="text-sm md:text-base text-gray-600 mt-1">
                       {JobDetails?.company}
                     </p>
                   </div>
                 </div>
-                <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <FaUserAstronaut className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
-                      Job Poster{" "}
-                    </p>
-                    <p className=" text-sm text-gray-800 mx-1 min-w-0 [overflow-wrap:anywhere]">
-                      {JobDetails?.user?.name}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-center mb-1">
-                    <MdEmail className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">Email </p>
-                    <p className=" text-sm text-gray-800 mx-1 min-w-0 [overflow-wrap:anywhere]">
-                      {JobDetails?.user?.email}
-                    </p>
-                  </div>
-                </div>
-                <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <GoLocation className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
-                      Location{" "}
-                    </p>
-                    <p className=" text-sm text-gray-800 mx-1">Bangladesh</p>
-                  </div>
-                  <div className="flex items-center justify-center mb-1">
-                    <MdCategory className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
-                      Category{" "}
-                    </p>
-                    <p className=" text-sm text-gray-800 mx-1 ">
-                      {JobDetails?.job_category}
-                    </p>
-                  </div>
-                </div>
-                <div className="md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <BsBriefcaseFill className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
-                      Job Type{" "}
-                    </p>
-                    <p className="text-sm text-gray-800 mx-1 capitalize">
-                      {JobDetails?.job_type}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-center mb-1">
-                    <AiOutlineDollarCircle className="text-xs font-semibold text-sky-700" />
-                    <p className="font-semibold text-base mx-1 w-24 shrink-0">
-                      Salary{" "}
-                    </p>
-                    <p className="text-sm text-gray-800 mx-1">
-                      ৳ {JobDetails?.salary} {JobDetails?.salary_period ? `(${JobDetails.salary_period})` : ""}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  {JobDetails?.user?.email === user?.email ? (
-                    <p className="text-xs text-red-500">
+                <div className="flex items-center shrink-0">
+                  {JobDetails?.user?._id && JobDetails.user._id === user?._id ? (
+                    <p className="text-sm text-red-500">
                       Unable to apply to your own job posting
                     </p>
+                  ) : JobDetails?.job_deadline &&
+                    Date.now() >= new Date(JobDetails.job_deadline).getTime() + 24 * 60 * 60 * 1000 ? (
+                    <p className="text-sm text-red-500">
+                      Applications closed: the deadline has passed
+                    </p>
                   ) : (
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center gap-3">
                       <button
                         onClick={handleBookMarkToggle}
                         title={isBookmarked ? "Remove Bookmark" : "Save Job to Bookmarks"}
-                        className="p-2 text-2xl mx-2 rounded-full border border-sky-700 text-sky-700 hover:bg-sky-50 transition-all"
+                        aria-label={isBookmarked ? "Remove bookmark" : "Save job"}
+                        className="p-2 text-2xl rounded-full border border-sky-700 text-sky-700 hover:bg-sky-50 transition-all"
                       >
                         {isBookmarked ? (
                           <BsBookmarkCheckFill className="text-indigo-600" />
@@ -192,13 +142,38 @@ export default function JobDetails() {
                       </button>
                       <button
                         onClick={handleApply}
-                        className="md:px-6 md:py-3 px-3 py-2 mt-2 md:mt-0 bg-indigo-500 rounded text-base tracking-widest uppercase transition-all duration-700 hover:bg-indigo-900 text-white font-medium"
+                        className="px-6 py-3 bg-indigo-500 rounded text-base tracking-widest uppercase transition-all duration-300 hover:bg-indigo-900 text-white font-medium"
                       >
                         Apply Position
                       </button>
                     </div>
                   )}
                 </div>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 rounded-xl bg-white border border-gray-100 shadow-sm p-5 md:p-6">
+                {[
+                  { icon: FaUserAstronaut, label: "Job Poster", value: JobDetails?.user?.name },
+                  { icon: MdEmail, label: "Email", value: JobDetails?.user?.email },
+                  { icon: GoLocation, label: "Location", value: "Bangladesh" },
+                  { icon: MdCategory, label: "Category", value: JobDetails?.job_category },
+                  { icon: BsBriefcaseFill, label: "Job Type", value: JobDetails?.job_type, capitalize: true },
+                  {
+                    icon: AiOutlineDollarCircle,
+                    label: "Salary",
+                    value: `৳ ${JobDetails?.salary ?? ""}${JobDetails?.salary_period ? ` (${JobDetails.salary_period})` : ""}`,
+                  },
+                ].map(({ icon: Icon, label, value, capitalize }) => (
+                  <div key={label} className="flex items-start gap-2 min-w-0">
+                    <Icon className="mt-1 shrink-0 text-sky-700" />
+                    <div className="min-w-0">
+                      <p className="text-xs uppercase tracking-wide text-gray-500">{label}</p>
+                      <p className={`text-sm md:text-base text-gray-800 break-words ${capitalize ? "capitalize" : ""}`}>
+                        {value || "—"}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="w-full md:px-4 py-2 flex items-center md:items-start md:flex-row flex-col justify-start md:justify-center">
@@ -247,7 +222,7 @@ export default function JobDetails() {
               </div>
             </div>
             <div className="w-full px-2 md:px-8 mb-2 flex flex-col">
-              <h1 className="text-xl font-semibold lg:text-2xl w-36">
+              <h1 className="text-xl font-semibold lg:text-2xl">
                 Related Jobs
               </h1>
               <div className="md:px-8 px-2 md:mx-4 flex flex-wrap items-center justify-center">

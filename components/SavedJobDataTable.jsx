@@ -2,6 +2,7 @@ import { delete_book_mark_job } from "@/Services/job/bookmark";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import Link from "next/link";
 import { AiFillDelete } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
@@ -106,8 +107,14 @@ export default function SavedJobDataTable() {
         keyField="_id"
         pagination
         title={`Total Saved Jobs: ${Data?.length}`}
-        fixedHeader
-        fixedHeaderScrollHeight="79%"
+        noDataComponent={
+          <div className="py-10 text-center text-gray-600">
+            <p className="mb-3">You haven&apos;t saved any jobs yet.</p>
+            <Link href="/frontend/displayJobs" className="inline-block px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
+              Browse jobs
+            </Link>
+          </div>
+        }
         selectableRows
         selectableRowsHighlight
         subHeader
@@ -121,7 +128,7 @@ export default function SavedJobDataTable() {
             placeholder={"Search with company name..."}
           />
         }
-        className="h-screen bg-white"
+        className="bg-white"
       />
 
       <ToastContainer />

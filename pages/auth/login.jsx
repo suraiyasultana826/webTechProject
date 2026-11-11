@@ -54,8 +54,14 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (Cookies.get("token")) {
+    // Only a complete session (token + saved user) counts as logged in. A leftover
+    // token without a user (e.g. a cookie shared from another localhost port)
+    // must not bounce the visitor away from the login page.
+    if (Cookies.get("token") && localStorage.getItem("user")) {
       Router.push("/");
+    } else {
+      Cookies.remove("token");
+      localStorage.removeItem("user");
     }
   }, []);
 

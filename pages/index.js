@@ -23,10 +23,13 @@ export default function Home() {
   }, [data, dispatch]);
 
   useEffect(() => {
-    if (token) {
+    if (token && localStorage.getItem("user")) {
       dispatch(setUserToken(token));
     } else {
+      // Half a session (token without user, or user without token) is logged out
+      Cookies.remove("token");
       localStorage.removeItem("user");
+      dispatch(setUserToken(null));
       dispatch(setUserData(null));
     }
   }, [token, dispatch]);
